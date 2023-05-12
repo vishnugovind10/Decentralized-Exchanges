@@ -1,0 +1,30 @@
+import requests
+
+def get_best_price(asset, amount):
+    dexes = ["DEX1", "DEX2", "DEX3"]  # List of DEXes to query
+
+    best_price = None
+
+    for dex in dexes:
+        url = f"https://{dex}.com/api/trade?asset={asset}&amount={amount}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            price = response.json()["price"]
+            if best_price is None or price < best_price:
+                best_price = price
+
+    return best_price
+
+def trade(asset, amount):
+    best_price = get_best_price(asset, amount)
+
+    if best_price is None:
+        print("No DEXes available for trading.")
+        return
+
+    print(f"Trading {amount} {asset} at the best price of {best_price}.")
+
+    # Execute trade logic here
+
+# Example usage
+trade("ETH", 1)
