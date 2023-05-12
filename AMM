@@ -1,0 +1,24 @@
+class AMM:
+    def __init__(self, x_init, y_init):
+        self.x = x_init
+        self.y = y_init
+
+    def calculate_price(self):
+        return self.y / self.x
+
+    def trade(self, delta_x):
+        self.y = (self.x * self.y) / (self.x + delta_x)
+        self.x += delta_x
+
+# Initialize an AMM with initial quantities of assets
+amm = AMM(100, 1000)
+
+# Print the initial price
+print("Initial price:", amm.calculate_price())
+
+# Simulate trading on the AMM
+trade_amount = 10
+amm.trade(trade_amount)
+
+# Print the updated price after the trade
+print("Price after trade:", amm.calculate_price())
